@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class listar {
 
@@ -148,5 +149,25 @@ public class listar {
         bd.desconectarBaseDeDatos();
         return listaProductoCat;
     }
-    
+    public LinkedList<String> listarImagen(int id) {
+        LinkedList<String> listarImag = new LinkedList();
+        conexion.conectar bd=new conexion.conectar();
+        bd.conectarBase();
+        String sql="SELECT * FROM imagenes WHERE idproducto="+id+"";
+        try {
+           bd.resultado = bd.sentencia.executeQuery(sql);
+                while (bd.resultado.next()) {
+                    String prod;
+                    prod=bd.resultado.getString("imagen");
+                    JOptionPane.showMessageDialog(null,prod);
+                    listarImag.add(prod);
+                }
+            bd.desconectarBaseDeDatos();
+        }
+        catch (Exception e){
+            Logger.getLogger(buscar.class.getName()).log(Level.SEVERE, null, e);
+        }
+        bd.desconectarBaseDeDatos();
+        return listarImag;
+    }
 }
