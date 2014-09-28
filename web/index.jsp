@@ -17,12 +17,14 @@
 <%  
    HttpSession sesion=request.getSession(true);
    String usuario=(String)sesion.getAttribute("usuario");
-    listar lis = new listar();
+   
     CtrlProductos ctrlp = new CtrlProductos();
     CtrlCategoria ctrlc = new CtrlCategoria();
     CtrlUsuario ctrlu = new CtrlUsuario();
     ArrayList Catprod = new ArrayList();
-    DefaultListModel listaProd = new DefaultListModel();
+    
+                    int control=7;
+                int j=1;
     %>
 <!DOCTYPE html>
 <html lang="en"><head>
@@ -82,6 +84,7 @@
                ResultSet rs = ctrlc.mostrarCategoria();
                 while(rs.next()){
                 String nombre=rs.getString("nombre");
+
             %>
             <li><a class="a.text-primary" href="index.jsp?mydata=<%= nombre%>"><%= nombre%></a></li>
              <% }  %> </ul>
@@ -91,16 +94,24 @@
                 String nomcat = request.getParameter("mydata");
                 String producto = null;
                 String nav = request.getParameter("nav");
-                if (nomcat == null){
-                    int control=7;
-                    int j=1;
-                    if (nav!=null){
-                       
-                        j=control;
-                        control = control +6;
+                String back = request.getParameter("back");
              
-                     
+                if (nomcat == null){
+                   
+                    if (nav!=null){
+                        int pag = Integer.parseInt(nav);
+                        j= pag;
+                        control = pag+6;
+                        if (control>ctrlp.getListaProductos().size()){
+                           control = ctrlp.getListaProductos().size();
                     }
+                      if (back!=null){
+                        int pagb = Integer.parseInt(nav);
+                        j= pagb-6;
+                        control = pagb;
+                       
+                    }
+                }
                 for(int i=j; i< control; i++){
                         producto = ctrlp.getListaProductos().get(i).getNombre();
                         int numprod = ctrlp.getnumprod(producto);
@@ -138,8 +149,8 @@
                     <%}
                    
                 %>
-                <div class="row">
-                      <p><a class="" href="index.jsp?nav=back" role="button"><< Atras |</a><a class="" href="index.jsp?nav=sig" role="button"> Siguiente >></a></p>
+                <div class="col-lg-9">
+                      <p><a class="" href="index.jsp?back=<%= j%>" role="button"><< Atras |</a><a class="" href="index.jsp?nav=<%= control%>" role="button"> Siguiente >></a></p>
                 </div>
         
           </div>
