@@ -27,6 +27,7 @@
     CtrlUsuario ctrlu = new CtrlUsuario();
     ArrayList Catprod = new ArrayList();
     DefaultListModel listaProd = new DefaultListModel();
+    
     %>
 <!DOCTYPE html>
 <html lang="en"><head>
@@ -106,23 +107,43 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Inicie Sesion</h1>
-        <form name="iniciosesion" id="iniciosesion" action="iniciarsesion" method="post">
-                <table id="mitabla" style="border-collapse: separate;"><tr><td><div id="info">
+        <h1>Iniciar Sesion</h1>
+      </div>
+       <div class="opaca">
+           <div class="row">
+                <form name="iniciosesion" id="iniciosesion" action="iniciarsesion" class="form-horizontal" method="post">
+                <div id="info">
                                 <%String error=request.getParameter("Error");
                                 if(error!=null){%>
                                 <%=error%>
                                <% }%>
                                 
-                            </div></td></tr>
-                    <tr> <td>Ingrese Usuario&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="usuario" name="usuario" placeholder="Usuario :" required=""><div id="erroruser"></div><br><br>
-                        </td></tr><tr><td>Ingrese Contraseña <input type="text" id="contra" name="contra" placeholder="Contraseña :" required=""><div id="errorpass"></div><br> <br>
-  </td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <button id="boton" type="submit" onclick="comprobar();" class="texto"><img src="imagenes/Login.jpg" width="80" height="25"><br>
-         </td></tr> </table> </form>  
- 
-      </div>
-     
+                            </div>
+                    <div class="form-group">
+                    <label  class="col-sm-4 control-label">Ingrese Usuario </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario :" required="">
+                        <div id="erroruser"></div>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <label  class="col-sm-4 control-label"> Ingrese Contraseña </label>  
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="contra" name="contra" placeholder="Contraseña :" required="">
+                         <div id="errorpass">   
+                    </div>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                         <div class="col-sm-offset-4 col-sm-6">
+                            <button id="boton" type="submit" onclick="comprobar();" class="texto"><img src="imagenes/Login.jpg" width="80" height="25">
+                         </div> 
+                    <div>   
+                   </form>  
+           </div>
+        </div> 
+     </div> 
+    </div> 
     </div> <!-- /container -->
 
 <div class="footer">

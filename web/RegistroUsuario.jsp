@@ -19,8 +19,11 @@
     listar lis = new listar();
     CtrlProductos ctrlp = new CtrlProductos();
     CtrlCategoria ctrlc = new CtrlCategoria();
+    CtrlUsuario ctrlu = new CtrlUsuario();
     ArrayList Catprod = new ArrayList();
     DefaultListModel listaProd = new DefaultListModel();
+    HttpSession sesion=request.getSession(true);
+   String usuario=(String)sesion.getAttribute("usuario");
     %>
 <!DOCTYPE html>
 <html lang="en"><head>
@@ -50,11 +53,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
      <script language="JavaScript" type="text/javascript" src="js/jquery.js" charset="utf-8"></script>
-         <script>
-$(function() {
-$( "#datepicker" ).datepicker();
-});
-</script>
+    <script>
+        $(function() {
+            $( "#datepicker" ).datepicker();
+        });
+    </script>
         <script type="text/javascript" language="javascript">
         $(window).load(function(){
 
@@ -166,7 +169,6 @@ $( "#datepicker" ).datepicker();
         });
     
     
-    
               function rebisar(texto){
               buscar=/[·:.ºª!|$€~%&()=?¿''Ç]/;
             if(buscar.test(texto)) {
@@ -188,7 +190,7 @@ function comprobar(){
        document.getElementById("otrapass").value="";
        document.getElementById("otrapass").focus(); 
     }
-  
+
 }   
 
 </script>
@@ -219,21 +221,7 @@ function cambiarDisplay() {
   }
 }
     </script>
-   <style>
-        input.texto{
-    border-radius: 15px;
-}
-
-input[type=submit]{
-    border-radius: 15px;
-}
-
-    table td
-    { padding: 10px;
-       margin: 10px;
-    }
-
-    </style>
+   
   </head>
 
   <body>
@@ -242,88 +230,110 @@ input[type=submit]{
 
       <!-- Static navbar -->
       <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">DIRECT MARKET</a>
-          </div>
-          <div style="" class="navbar-collapse collapse in">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
+            <%@ include file="topmenu.jsp" %> 
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
           
+          <h1>Registro</h1>
+      </div>  
           
+          <div class="opaca">
+           <div class="row"> 
           
-          
-          
-          
-        <h1>Registro</h1>
-         <div id="registro">
-            <form name="mostrarimagen" action="registrarNuevo.jsp" method="post" enctype="multipart/form-data">
-                <table cellspacing="50" name="registrarse">   
-              
-                   <tr><td>      
-                           Ingrese Nick :   <input type="text" name="usuario" id="usuario" placeholder="Nick :" required="required" class="texto" onblur="comprobaruser();">
-          <div id="Info" style="float: right"></div>
-</td></tr>
-                   <tr><td>Ingrese Email : <input type="text" name="email" id="email" placeholder="Correo Electronico :" required="required" class="texto" onblur="comprobarmail();" onkeyup="rebisar();">
-                <div id="InfoMail" style="float: right"></div></td></tr>        
-            <tr><td>Ingrese Contraseña : <input type="password" name="pass" id="pass" placeholder="Contraseña :" onblur="repasar();" required="required" class="texto">
-                <div id="masInfo" style="float: right"></div></td></tr>
-            <tr><td>Repita la Contraseña anterior : <input type="password" name="otrapass" id="otrapass" placeholder="Repetir Contraseña :" onblur="comprobar();" required="required" class="texto">
-                <div id="otraInfo" style="float: right"></div></td></tr>
-            <tr><td>Seleccione una opción : <select name="menu" id="menu"  onchange="cambiarDisplay();">
-  <option selected="selected" value="cliente">Cliente</option>
-  <option value="proveedor">Proveedor</option>
-</select></td></tr>
-  <tr><td>Ingrese Nombre : <input type="text" name="nombre" placeholder="Nombre :" required="required" class="texto"></td></tr>
-  <tr><td>Ingrese Apellido : <input type="text" name="apellido" placeholder="Apellido :" required="required" class="texto"></td></tr>
-  <tr><td>Ingrese Fecha Nacimiento : <input type="text" name="nacimiento" required="required"  id="datepicker"></td></tr>
-  <tr id="linke"><td>Ingrese Compania : <input type="text" name="compania" class="texto"></td></tr>
-  <tr id="linke1"><td>Ingrese Link Web : <input type="text" name="link" class="texto"></td></tr>
-  <tr><td>Seleccione Imagen : <input name="myFile" type="file" id="myFile" required="required"/><img id="imgSalida" width="50" height="50" src="" /></td></tr>
-  <tr><td><input type="submit" class="texto" value="Registrar Nuevo"></td></tr>
-   </table></form>
-      
-             
+        
+            <form name="mostrarimagen" action="registrarNuevo.jsp" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <div class="form-group">     
+                    <label  class="col-sm-4 control-label">Ingrese Nick : </label>
+                    <div class="col-sm-8">
+                        <input type="text" name="usuario" id="usuario" placeholder="Nick :" required="required" class="texto" onblur="comprobaruser();">
+                        <div id="Info" style="float: right"></div>
+                    </div> 
+                </div> 
+                 <div class="form-group"> 
+                     <label  class="col-sm-4 control-label">Ingrese Email :</label>
+                     <div class="col-sm-6">
+                        <input type="text" name="email" id="email" placeholder="Correo Electronico :" required="required" class="texto" onblur="comprobarmail();" onkeyup="rebisar();">
+                        <div id="InfoMail" style="float: right"></div>
+                     </div>
+                 </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label">Ingrese Contraseña : </label>
+                <div class="col-sm-6">
+                    <input type="password" name="pass" id="pass" placeholder="Contraseña :" onblur="repasar();" required="required" class="texto">
+                    <div id="masInfo" style="float: right"></div>
+                </div>
+            </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label">Repita la Contraseña anterior :</label>
+                <div class="col-sm-6">
+                    <input type="password" name="otrapass" id="otrapass" placeholder="Repetir Contraseña :" onblur="comprobar();" required="required" class="texto">
+                    <div id="otraInfo" style="float: right"></div>
+                </div>
+            </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label">Seleccione una opción :</label>
+                <div class="col-sm-6">
+                    <select name="menu" id="menu"  onchange="cambiarDisplay();">
+                    <option selected="selected" value="cliente">Cliente</option>
+                    <option value="proveedor">Proveedor</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label">Ingrese Nombre : </label>
+                <div class="col-sm-6">
+                        <input type="text" name="nombre" placeholder="Nombre :" required="required" class="texto">
+                </div>
+            </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label">Ingrese Apellido :</label>
+                <div class="col-sm-6">
+                    <input type="text" name="apellido" placeholder="Apellido :" required="required" class="texto">
+                </div>
+            </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label">Ingrese Fecha Nacimiento : </label>
+                <div class="col-sm-6">
+                    <input type="text" name="nacimiento" required="required">
+                </div>
+            </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label">Ingrese Compania :</label>
+                <div class="col-sm-6">
+                    <input type="text" name="compania" class="texto">
+                </div>
+            </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label" >Ingrese Link Web :</label>
+                <div class="col-sm-6">
+                    <input type="text" name="link" class="texto">
+                </div>
+            </div>
+             <div class="form-group"> 
+                 <label  class="col-sm-4 control-label">Seleccione Imagen :</label>
+                 <div class="col-sm-6">
+                    <input name="myFile" type="file" id="myFile" class="btn btn-primary" required="required"/>
+                    <img id="imgSalida" width="50" height="50" src="" />
+                 </div>
+             </div>
+            <div class="form-group"> 
+                <label  class="col-sm-4 control-label"></label>
+                <div class="col-sm-6">  
+                    <input type="submit" class="btn btn-primary" value="Aceptar">
+                </div>
+            </div>
+            </form>
            
-        </div>
+
  
       </div>
-       <div class="row">
-     <div class="footer">
-        <p>&copy; Company 2014</p>
-      </div>
+    </div> 
     </div> <!-- /container -->
-
+    <div class="footer">
+         <%@ include file="footer.jsp" %> 
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
